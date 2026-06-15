@@ -7,10 +7,10 @@ JAVA_URL="https://piston-data.mojang.com/v1/objects/97ccd4c0ed3f81bbb7bfacddd109
 
 # Install Packages:
 apt update
-
 apt install -y unzip
 
 mkdir -p /opt/minecraft/server
+mkdir -p /opt/minecraft/worlds
 
 if [ "$EDITION" = "java" ]; then
 	# Install Java:
@@ -26,6 +26,16 @@ elif [ "$EDITION" = "bedrock" ]; then
 else
 	echo "Unknown edition: $EDITION"
 	exit 1
- fi
+fi
 
-chown -R ubuntu:ubuntu /opt/minecraft
+echo "EDITION=$EDITION" > /opt/minecraft/.config
+
+wget -O /opt/minecraft/server/start.sh https://raw.githubusercontent.com/KieranGliver/mc-server/main/start.sh
+chmod +x /opt/minecraft/server/start.sh
+
+useradd --system --no-create-home --shell /usr/sbin/nologin minecraft
+chown -R minecraft:minecraft /opt/minecraft
+
+wget -O /etc/systemd/system/minecraft.service https://raw.githubusercontent.com/KieranGliver/mc-server/main/systemd/minecraft.service
+systemctl daemon-reload
+systemctl enable --now minecraft
