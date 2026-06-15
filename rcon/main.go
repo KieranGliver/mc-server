@@ -42,7 +42,7 @@ func main() {
 		os.Exit(1)
 	}
 	if resPacket.requestID == 2 && resPacket.packetType == 0 {
-		fmt.Print(resPacket.payload)
+		fmt.Println(resPacket.payload)
 	} else {
 		fmt.Println("Recieved unexpected packet requestID or packet type")
 		os.Exit(1)
