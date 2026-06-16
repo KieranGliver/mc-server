@@ -15,6 +15,10 @@ type RconPacket struct {
 }
 
 func main() {
+	if len(os.Args) < 2 {
+		fmt.Println("Requires at least one argument")
+		return
+	}
 	command := os.Args[1]
 	conn, err := net.Dial("tcp", "localhost:25575")
 	if err != nil {
@@ -23,7 +27,11 @@ func main() {
 	}
 	defer conn.Close()
 	loginPacket := buildRconPacket(1, 3, "minecraft")
-	conn.Write(loginPacket)
+	_, err = conn.Write(loginPacket)
+	if err != nil {
+		fmt.Println("Failed to write login request: ", err)
+		os.Exit(1)
+	}
 	resPacket, err := readRconPacket(conn)
 	if err != nil {
 		fmt.Println("Failed to read login response: ", err)
@@ -35,7 +43,11 @@ func main() {
 	}
 
 	commandPacket := buildRconPacket(2, 2, command)
-	conn.Write(commandPacket)
+	_, err = conn.Write(commandPacket)
+	if err != nil {
+		fmt.Println("Failed to write command packet: ", err)
+		os.Exit(1)
+	}
 	resPacket, err = readRconPacket(conn)
 	if err != nil {
 		fmt.Println("Failed to read command response: ", err)
@@ -44,7 +56,7 @@ func main() {
 	if resPacket.requestID == 2 && resPacket.packetType == 0 {
 		fmt.Println(resPacket.payload)
 	} else {
-		fmt.Println("Recieved unexpected packet requestID or packet type")
+		fmt.Println("Received unexpected packet requestID or packet type")
 		os.Exit(1)
 	}
 
