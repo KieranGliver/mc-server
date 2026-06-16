@@ -42,7 +42,7 @@ case "$1" in
 		if [ "$EDITION" = "java" ]; then
 			sudo -u minecraft /opt/minecraft/server/rcon "$2"
 		elif [ "$EDITION" = "bedrock" ]; then
-			sudo -u minecraft screen -S minecraft -X stuff "$2\n"
+			sudo -u minecraft screen -S minecraft -X stuff "$2"$'\n'
 			echo "Command sent. Run mc-wizard logs to see output"
 		else
 			echo "Unexpected edition in /opt/minecraft/.config"
@@ -113,7 +113,7 @@ case "$1" in
 		if [ -d "/opt/minecraft/worlds/$CURRENT_WORLD" ]; then
 			rm -rf "/opt/minecraft/worlds/$CURRENT_WORLD"
 		fi
-		cp -r "$WORLD_PATH/$CURRENT_WORLD" /opt/minecraft/worlds/$CURRENT_WORLD
+		cp -r "$WORLD_PATH/$CURRENT_WORLD" "/opt/minecraft/worlds/$CURRENT_WORLD"
 		# Tell Bedrock to resume normal world writes after the copy
 		if [ "$EDITION" = "bedrock" ]; then
 			mc-wizard cmd "save resume"
