@@ -27,8 +27,7 @@ if [ "$EDITION" = "java" ]; then
 	echo "eula=true" > /opt/minecraft/server/eula.txt
 	wget -O /opt/minecraft/server/server.properties https://raw.githubusercontent.com/KieranGliver/mc-server/main/minecraft/java-server.properties.template
 elif [ "$EDITION" = "bedrock" ]; then
-	apt install -y unzip
-	apt install -y screen
+	apt install -y unzip screen
 	# Download bedrock server:
 	wget -O /tmp/bedrock-server.zip $BEDROCK_URL 
 	unzip /tmp/bedrock-server.zip -d /opt/minecraft/server
