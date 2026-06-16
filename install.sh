@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 # ── CONFIGURE ME ──────────────────────────
 EDITION="java"   # change to "bedrock" for Bedrock edition
 JAVA_MEMORY="2G"
