@@ -4,7 +4,7 @@ A zero-dependency Minecraft server setup for any Ubuntu cloud instance. Paste on
 
 Supports both **Java Edition** and **Bedrock Edition**. Includes a Go-based RCON client for Java and a CLI wizard for managing the server after launch.
 
-**Tested on:** AWS EC2. Should work on GCP, Azure, DigitalOcean, and any other provider running Ubuntu — untested.
+**Tested on:** AWS EC2. Should work on GCP, Azure, DigitalOcean, and any other provider running Ubuntu.
 
 ---
 
@@ -22,7 +22,7 @@ Supports both **Java Edition** and **Bedrock Edition**. Includes a Go-based RCON
 
 ## Requirements
 
-- Ubuntu 22.04 or 24.04
+- Ubuntu 24.04
 - The following ports open inbound in your firewall or cloud security group:
 
 | Edition | Port  | Protocol |
@@ -37,9 +37,10 @@ Supports both **Java Edition** and **Bedrock Edition**. Includes a Go-based RCON
 
 ### 1. Launch an Ubuntu instance
 
-Any cloud provider works. Minimum recommended specs:
-- **Java:** t3.small (2GB RAM) — set `JAVA_MEMORY` to `1G`
-- **Bedrock:** t3.micro (1GB RAM) is sufficient
+Any cloud provider works. Recommended specs (varies on concurrent player count):
+- **Java:** (8GB RAM) — set `JAVA_MEMORY` to under instance RAM maximum
+- **Bedrock:** (8GB RAM) is sufficient
+
 
 ### 2. Open the required port
 
@@ -58,14 +59,16 @@ DIFFICULTY="easy"
 SEED=""               # leave empty for a random world
 MAX_PLAYERS="20"
 MOTD="My Server"
-BEDROCK_URL="https://..."   # paste Bedrock download URL from minecraft.net
-JAVA_URL="https://..."      # paste Java server.jar URL from minecraft.net
+BEDROCK_URL="https://..."
+JAVA_URL="https://..."
 # ──────────────────────────────────────────
 ```
 
 Download URLs:
 - **Java:** https://www.minecraft.net/en-us/download/server
 - **Bedrock:** https://www.minecraft.net/en-us/download/server/bedrock
+
+The url needed for the configure can be found by copying the address from the download button.
 
 ### 4. Paste into User Data
 
@@ -93,7 +96,7 @@ mc-wizard status
 | Variable | Default | Description |
 |----------|---------|-------------|
 | `EDITION` | `java` | `java` or `bedrock` |
-| `JAVA_MEMORY` | `2G` | JVM heap size — set to ~half your instance RAM |
+| `JAVA_MEMORY` | `2G` | JVM heap size — set to ~under your instance RAM |
 | `GAMEMODE` | `survival` | `survival`, `creative`, or `adventure` |
 | `DIFFICULTY` | `easy` | `peaceful`, `easy`, `normal`, or `hard` |
 | `SEED` | *(empty)* | World seed — leave empty for random |
