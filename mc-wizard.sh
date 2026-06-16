@@ -77,6 +77,11 @@ case "$1" in
 			echo "Unexpected edition in /opt/minecraft/.config"
 			exit 1
 		fi
+		# Guard against malformed level-names
+		if [ -z "$CURRENT_WORLD" ]; then
+			echo "Could not read level-name from server.properties"
+			exit 1
+		fi
 		# Remove stale copy of current world from worlds store if it exists, then move current world there
 		if [ -d "/opt/minecraft/worlds/$CURRENT_WORLD" ]; then
 			rm -rf "/opt/minecraft/worlds/$CURRENT_WORLD"
@@ -110,6 +115,12 @@ case "$1" in
 			echo "Unexpected edition in /opt/minecraft/.config"
 			exit 1
 		fi
+		# Guard against malformed level-names
+		if [ -z "$CURRENT_WORLD" ]; then
+			echo "Could not read level-name from server.properties"
+			exit 1
+		fi
+
 		if [ -d "/opt/minecraft/worlds/$CURRENT_WORLD" ]; then
 			rm -rf "/opt/minecraft/worlds/$CURRENT_WORLD"
 		fi
