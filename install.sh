@@ -50,6 +50,8 @@ echo "JAVA_MEMORY=$JAVA_MEMORY" >> /opt/minecraft/.config
 wget -O /opt/minecraft/server/start.sh https://raw.githubusercontent.com/KieranGliver/mc-server/main/minecraft/start.sh
 chmod +x /opt/minecraft/server/start.sh
 
+wget -O /usr/local/bin/mc-wizard https://raw.githubusercontent.com/KieranGliver/mc-server/main/mc-wizard.sh
+chmod +x /usr/local/bin/mc-wizard
 
 useradd --system --no-create-home --shell /usr/sbin/nologin minecraft
 chown -R minecraft:minecraft /opt/minecraft
